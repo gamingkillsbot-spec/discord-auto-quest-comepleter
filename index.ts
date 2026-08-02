@@ -185,16 +185,17 @@ client.once('ready', async () => {
     const rest = new REST({ version: '10' }).setToken(BOT_TOKEN);
 
     try {
-        console.log(`🔄 Registering slash commands for guild ${GUILD_ID}...`);
-        await rest.put(
-            Routes.applicationGuildCommands(client.user?.id || '', GUILD_ID),
-            { body: commands }
-        );
-        console.log('✅ Slash commands registered!');
-        console.log('📋 Commands: /token, /complete, /mytoken, /deltoken, /help');
-    } catch (error) {
-        console.error('❌ Error registering commands:', error);
-    }
+    console.log('🔄 Registering slash commands globally...');
+    await rest.put(
+        Routes.applicationCommands(client.user?.id || ''),
+        { body: commands }
+    );
+    console.log('✅ Global slash commands registered!');
+    console.log('📋 Commands: /token, /complete, /mytoken, /deltoken, /help');
+} catch (error) {
+    console.error('❌ Error registering commands:', error);
+}
+    
 });
 
 // ====== HANDLE INTERACTIONS ======
